@@ -6,7 +6,9 @@ import org.htlleoben.dbmm.transferobjects.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -64,8 +66,42 @@ public class UserDaoRelational implements UserDao {
 
   @Override
   public List<User> getAllUsers() {
-    // TODO implementieren Sie die Methode
-    return null;
+    PreparedStatement st = null;
+    List<User> usersInDB = new ArrayList<User>();
+    if (dbConnection == null)
+      dbConnection = ConnectionFactory.getConnection();
+    String sqlStatement = "Select * from users";
+
+    try {
+      st = dbConnection.prepareStatement(sqlStatement);
+      // execute the preparedstatement insert
+      System.out.println("Executing the following Query: " + st.toString());
+
+      ResultSet rs = st.executeQuery();
+      while (rs.next()) {
+        User dbUser = new User(rs.getString("username"), rs.getString("password"), rs.getString("email"));
+        usersInDB.add(dbUser);
+      }
+
+      st.close();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } finally {
+      //finally block used to close resources
+      try {
+        if (st != null)
+          st.close();
+      } catch (SQLException se2) {
+      } // nothing we can do
+      try {
+        if (dbConnection != null) dbConnection.close();
+      } catch (SQLException se) {
+        se.printStackTrace();
+      } //end finally try
+    } //end try
+
+    return usersInDB;
   }
 
   @Override

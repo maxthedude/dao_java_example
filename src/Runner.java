@@ -7,7 +7,6 @@ import org.htlleoben.dbmm.transferobjects.User;
 public class Runner {
 
   public static void main(String[] args) {
-    // TODO Auto-generated method stub
     int auswahl = 1;
     User myUser = new User("Markus", "asdf1234", "mailme@mail.com");
     UserDao userData = null;

@@ -4,7 +4,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
@@ -37,12 +36,12 @@ public class MainMethod extends Application {
       FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
 
       // Create the Pane and all Details
-      VBox root = (VBox) loader.load(fxmlStream);
+      //VBox root = (VBox) loader.load(fxmlStream);
       Pane myPane = (Pane) FXMLLoader.load(getClass().getResource
             ("MainWindow.fxml"));
 
       // Create the Scene
-      Scene scene = new Scene(root);
+      Scene scene = new Scene(myPane);
 
       // Set the Scene to the Stage
       stage.setScene(scene);
